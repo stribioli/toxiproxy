@@ -88,6 +88,8 @@ func (link *ToxicLink) Start(
 	go link.read(labels, server, source)
 
 	for i, toxic := range link.toxics.chain[link.direction] {
+		link.stubs[i].Logger = logger
+
 		if stateful, ok := toxic.Toxic.(toxics.StatefulToxic); ok {
 			link.stubs[i].State = stateful.NewState()
 		}

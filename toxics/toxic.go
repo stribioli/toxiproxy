@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/Shopify/toxiproxy/v2/stream"
+	"github.com/rs/zerolog"
 )
 
 // A Toxic is something that can be attatched to a link to modify the way
@@ -62,6 +63,7 @@ type ToxicStub struct {
 	Input     <-chan *stream.StreamChunk
 	Output    chan<- *stream.StreamChunk
 	State     interface{}
+	Logger    *zerolog.Logger
 	Interrupt chan struct{}
 	running   chan struct{}
 	closed    chan struct{}

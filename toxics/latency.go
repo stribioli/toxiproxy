@@ -40,6 +40,13 @@ func (t *LatencyToxic) Pipe(stub *ToxicStub) {
 			sleep := t.delay() - time.Since(c.Timestamp)
 			select {
 			case <-time.After(sleep):
+				stub.Logger.
+					Trace().
+					Str("component", "LatencyToxic").
+					Str("toxic_type", "latency").
+					Int64("sleep", sleep.Milliseconds()).
+					Int("len", len(c.Data)).
+					Msg("Releasing StreamChunk after sleeping")
 				c.Timestamp = c.Timestamp.Add(sleep)
 				stub.Output <- c
 			case <-stub.Interrupt:

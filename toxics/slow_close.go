@@ -16,6 +16,12 @@ func (t *SlowCloseToxic) Pipe(stub *ToxicStub) {
 		case c := <-stub.Input:
 			if c == nil {
 				delay := time.Duration(t.Delay) * time.Millisecond
+				stub.Logger.
+					Trace().
+					Str("component", "SlowCloseToxic").
+					Str("toxic_type", "slow_close").
+					Int64("sleep", delay.Milliseconds()).
+					Msg("Sleeping for the last packet of the TCP connection")
 				select {
 				case <-time.After(delay):
 					stub.Close()

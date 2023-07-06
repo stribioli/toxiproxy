@@ -36,6 +36,12 @@ func (t *SlowOpenToxic) Pipe(stub *ToxicStub) {
 
 				delay := time.Duration(t.Delay) * time.Millisecond
 				state.Warm = true
+				stub.Logger.
+					Trace().
+					Str("component", "SlowOpenToxic").
+					Str("toxic_type", "slow_open").
+					Int64("sleep", delay.Milliseconds()).
+					Msg("Sleeping for the first packet of the TCP connection")
 
 				select {
 				case <-time.After(delay):
