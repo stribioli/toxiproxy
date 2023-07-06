@@ -110,6 +110,8 @@ func run() error {
 }
 
 func setupLogger() zerolog.Logger {
+	zerolog.TimeFieldFormat = time.RFC3339Nano
+
 	zerolog.TimestampFunc = func() time.Time {
 		return time.Now().UTC()
 	}
